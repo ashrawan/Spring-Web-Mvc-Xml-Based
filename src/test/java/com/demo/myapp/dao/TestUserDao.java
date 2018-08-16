@@ -1,5 +1,6 @@
 package com.demo.myapp.dao;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 import org.hibernate.Session;
@@ -16,12 +17,10 @@ import com.demo.myapp.model.User;
 
 @ContextConfiguration("classpath:dispatcher-servlet.xml")
 @RunWith(SpringJUnit4ClassRunner.class)
-@Transactional
 public class TestUserDao {
 
 	@Autowired
-	private SessionFactory sessionFactory;
-	Session session = null;
+	private UserDao userDao;
 
 	private User user = new User();
 
@@ -29,53 +28,43 @@ public class TestUserDao {
 
 	@Before
 	public void setUp() {
-		session = sessionFactory.getCurrentSession();
 		user.setFullName("test name");
+		user.setStatus(1);
 	}
 
 	@Test
 	public void testSaveUser() {
-		// saving new User
-		long user1 = (long) session.save(user);
-		System.out.println("saved User: "+user1);
 
-		assertNotNull(user1);
+		User savedUser = userDao.addUser(user);
+		assertNotNull(savedUser);
+		assertEquals(user, savedUser);
 	}
 
 	@Test
 	public void testUpdateUser() {
-		// getting users from db
-		User user1 = session.get(User.class, ID);
-		System.out.println("Existing User: " + user1.toString());
 
-		// setting new values to user
-		user1.setFullName("new test");
-		session.update(user1);
-
-		// checking updated user
-		User updatedUser = session.get(User.class, ID);
-		System.out.println("Updated User: " + updatedUser.toString());
-		assertNotNull(user1);
-
+		user.setId(ID);
+		user.setFullName("name changed");
+		
+		User updateUser = userDao.updateUser(user);
+		
+		assertNotNull(updateUser);
+		assertEquals(user, updateUser);
 	}
 
 	@Test
 	public void testGetUserById() {
 
-		// getting users from db
-		User user1 = session.get(User.class, ID);
+		User user1 = userDao.getUser(ID);
 		System.out.println("Get User By Id: " + user1.toString());
 		assertNotNull(user1);
-
 	}
 
 	@Test
 	public void testDeleteUser() {
 
-		// getting users from db
-		User user1 = session.get(User.class, ID);
-		session.delete(user1);
-		assertNotNull(user1);
-
+		// Delete user of different id
+		userDao.deleteUser(2L);
+		
 	}
 }
