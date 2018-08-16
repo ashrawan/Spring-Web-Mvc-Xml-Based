@@ -11,12 +11,16 @@
 		http://www.springframework.org/schema/mvc
     	http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd">
 
-
 	<mvc:annotation-driven />
 
 	<context:component-scan base-package="com.demo.myapp"></context:component-scan>
 
-	<bean id="myDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/views/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+	
+		<bean id="myDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
 		<property name="driverClass" value="org.h2.Driver" />
 		<property name="jdbcUrl" value="jdbc:h2:tcp://localhost/~/test" />
 		<property name="user" value="sa" />
@@ -45,12 +49,5 @@
 	</bean>
 
 	<tx:annotation-driven transaction-manager="myTransactionManager" />
-
-
-	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<property name="prefix" value="/WEB-INF/views/" />
-		<property name="suffix" value=".jsp" />
-	</bean>
-
 
 </beans>

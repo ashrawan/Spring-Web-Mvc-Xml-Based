@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.demo.myapp.model.User;
 
 @Repository
+@Transactional
 public class UserDaoImpl implements UserDao{
 
     @Autowired
@@ -21,7 +22,7 @@ public class UserDaoImpl implements UserDao{
     
     Session session = null;
 
-    @Transactional
+    
     public List<User> getAllUsers() {
         session = sessionFactory.getCurrentSession();
         CriteriaBuilder builder = session.getCriteriaBuilder();
@@ -32,7 +33,7 @@ public class UserDaoImpl implements UserDao{
     }
     
     @Override
-    @Transactional
+    
     public User addUser(User user) {
         session = sessionFactory.getCurrentSession();
         user.setStatus(1);
@@ -41,7 +42,7 @@ public class UserDaoImpl implements UserDao{
     }
 
     @Override
-    @Transactional
+    
     public User getUser(long id) {
         session = sessionFactory.getCurrentSession();
         User user = session.find(User.class, id);
@@ -49,7 +50,7 @@ public class UserDaoImpl implements UserDao{
     }
 
     @Override
-    @Transactional
+    
     public User updateUser(User user) {
         session = sessionFactory.getCurrentSession();
         session.update(user);
@@ -57,7 +58,7 @@ public class UserDaoImpl implements UserDao{
     }
 
     @Override
-    @Transactional
+    
     public void deleteUser(long id) {
         session = sessionFactory.getCurrentSession();
         User user = session.find(User.class, id);
