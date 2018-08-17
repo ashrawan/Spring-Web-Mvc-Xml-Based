@@ -3,13 +3,10 @@ package com.demo.myapp.dao;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Profile;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -20,6 +17,7 @@ import com.demo.myapp.model.User;
 @ActiveProfiles("test")
 @ContextConfiguration("classpath:dispatcher-servlet.xml")
 @RunWith(SpringJUnit4ClassRunner.class)
+@Transactional
 public class TestUserDao {
 
 	@Autowired
@@ -67,7 +65,7 @@ public class TestUserDao {
 	public void testDeleteUser() {
 
 		// Delete user of different id
-		userDao.deleteUser(2L);
+		userDao.deleteUser(1L);
 		
 	}
 }
