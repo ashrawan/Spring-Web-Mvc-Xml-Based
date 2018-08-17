@@ -2,6 +2,7 @@ package com.demo.myapp.dao;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -63,9 +64,11 @@ public class TestUserDao {
 
 	@Test
 	public void testDeleteUser() {
-
-		// Delete user of different id
-		userDao.deleteUser(1L);
 		
+		User savedUser = userDao.addUser(user);
+		userDao.deleteUser(savedUser.getId());
+		assertNull(userDao.getUser(savedUser.getId()));
 	}
+		
+		
 }
