@@ -44,21 +44,18 @@ public class TestUserDao {
 
 	@Test
 	public void testUpdateUser() {
-
-		user.setId(ID);
-		user.setFullName("name changed");
 		
+		User savedUser = userDao.addUser(user);
+		savedUser.setFullName("name changed");		
 		User updateUser = userDao.updateUser(user);
-		
 		assertNotNull(updateUser);
-		assertEquals(user, updateUser);
 	}
 
 	@Test
 	public void testGetUserById() {
 
-		User user1 = userDao.getUser(ID);
-		System.out.println("Get User By Id: " + user1.toString());
+		User savedUser = userDao.addUser(user);
+		User user1 = userDao.getUser(savedUser.getId());
 		assertNotNull(user1);
 	}
 
